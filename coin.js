@@ -87,3 +87,7 @@ module.exports.decoderawtransaction = function (rawtx, callback) {
 module.exports.getrawmempool = function (callback) {
   return process_request('getrawmempool', [], callback)
 }
+
+module.exports.getpeerinfo = function (callback) {
+  return process_request('getpeerinfo', [], callback)
+}
