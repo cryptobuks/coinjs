@@ -1,17 +1,26 @@
-var coin = require('./coin')
+var coin = require('./coin2')
 var util = require('util')
 
 var txid = '0ae0096056aaf80bb5b22c2624d7c278bbde9dfaf15fe3761b48d6b2edb41950'
 
-coin.getrawtransaction(txid, function (err, rawtx) {
+var btc_test_rpc = new coin.JSONRPC({
+  port: 18332,
+  username: process.env.BITCOINRPC_USER,
+  password: process.env.BITCOINRPC_PASS
+})
+
+var handleError = function (err) {
   if (err) {
     console.error(err)
     throw(err)
   }
-  else {
-    console.log("rawtx: " + rawtx)
-    //console.log(rawtx)
-    // console.log( util.inspect(rawtx, false, null) )
-  }
+}
+
+btc_test_rpc.getrawtransaction(txid, function (err, rawtx) {
+  handleError(err)
+  btc_test_rpc.decoderawtransaction(rawtx, function (err, txObj) {
+    handleError(err)
+    console.log(util.inspect(txObj, false, null))
+  })
 })
 
