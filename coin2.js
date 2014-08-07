@@ -1,14 +1,38 @@
 var http = require('http')
 var merge = require('merge')
 
-// project/network => port lookup functionality here
-// module.exports.Projects = {
-// }
+var Projects = {
+  bitcoin: {
+    mainnet: {
+      port: 8332,
+    },
+    testnet: {
+      port: 18332,
+    },
+  },
+  litecoin: {
+    mainnet: {
+      port: 9332,
+    },
+    testnet: {
+      port: 19332,
+    },
+  },
+  darkcoin: {
+    mainnet: {
+      port: 9998,
+    },
+    testnet: {
+      port: 19998,
+    },
+  },
+}
+module.exports.Projects = Projects
 
 module.exports.JSONRPC = function Coin (options) {
   var defaults = {
     hostname: 'localhost',
-    port: 8332,
+    port: Projects['bitcoin']['mainnet'].port,
   }
   options = options || defaults
 
