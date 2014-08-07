@@ -1,0 +1,10 @@
+{
+  "name": "testnet-project",
+  "description": "Bitcoin JSON-RPC utilities, works for altcoins",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "merge": "1.1.3",
+    "util": "0.10.3"
+  }
+}
