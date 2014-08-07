@@ -5,7 +5,7 @@ var util = require('util')
 var rawtx = '010000000123623ad74d7b920e030fb8473ed0111fb3eb593986d9659e91ca0d68f22157f1010000006b483045022100e900c8fde82f2a20e94fe90de83a4ad90697d1252cdae6f7238c2985d1dba96002203644dec7f8a7b4656c7cc003aa5c6f4a5f372ad9e442170b1d8fe797407f94ac012102f0d38334d896417588fb48f02ddb889bbf486289a1b165aacfeb346d94161a45ffffffff02802b530b000000001976a91465a48f43d847feeb2a14615129e618fa94f50db388acb0ba8a0f000000001976a914d7c5177165bc9fb5b89798b81a2eb5f69df913c988ac00000000'
 
 var btc_test_rpc = new coin.JSONRPC({
-  port: 18332,
+  port: coin.Projects['bitcoin']['testnet'].port,
   username: process.env.BITCOINRPC_USER,
   password: process.env.BITCOINRPC_PASS
 })
