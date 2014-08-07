@@ -1,69 +1,25 @@
 var http = require('http')
+var merge = require('merge')
 
-// module.exports =
-function Coin (project, network, hostname, user, pass) {
-  // console.log(Array.prototype.slice.call(arguments))
+// project/network => port lookup functionality here
+// module.exports.Projects = {
+// }
 
-  // still want to default project to 'bitcoin',
-  //   network to 'mainnet', and
-  //   hostname to 'localhost'
-  // this.hostname = 'localhost'
-
-  this.projects = {
-    bitcoin: {
-      mainnet: {
-        // network details here
-        port: 8332,
-      },
-      testnet: {
-        // network details here
-        port: 18332,
-      },
-    },
-    litecoin: {
-      mainnet: {
-        // network details here
-        port: 9332,
-      },
-      testnet: {
-        // network details here
-        port: 19332,
-      },
-    },
-    darkcoin: {
-      mainnet: {
-        // network details here
-        port: 9998,
-      },
-      testnet: {
-        // network details here
-        port: 19998,
-      },
-    },
+module.exports.JSONRPC = function Coin (options) {
+  var defaults = {
+    hostname: 'localhost',
+    port: 8332,
   }
+  options = options || defaults
 
-  // validate project
-  if (!this.projects.hasOwnProperty(project)) {
-    throw new Error("Project '" + project + "' not supported")
-  }
-  this.project = project
+  // merge in defaults with options, options will take precedence
+  options = merge(true, defaults, options)
 
-  // validate network
-  if (!this.projects[project].hasOwnProperty(network)) {
-    throw new Error("Network '" + network + "' not supported for project " + project)
-  }
-  this.network = network
-
-  this.port = this.projects[project][network].port
-  this.hostname = hostname
-  this.user = user
-  this.pass = pass
-
-
-  // may remove this, just learning OO JS for now
-  this.setProject = function (project) {
-    this.project = project
-  }
+  // new_options
+  this.hostname = options.hostname
+  this.username = options.username
+  this.password = options.password
+  this.port = options.port
 
   var opts = {
     hostname: this.hostname,
@@ -75,7 +31,7 @@ function Coin (project, network, hostname, user, pass) {
       // 'Content-Length': params.length,
     },
 
-    auth: this.user + ':' + this.pass,
+    auth: this.username + ':' + this.password,
   }
 
 
@@ -86,9 +42,6 @@ function Coin (project, network, hostname, user, pass) {
       'params': params
     })
     opts.headers['Content-Length'] = params.length
-
-    // console.log("opts = ...")
-    // console.log(opts)
 
     var data = [];
     var req = http.request(opts, function (resp) {
@@ -152,22 +105,3 @@ function Coin (project, network, hostname, user, pass) {
   }
 
 }
-
-// project, network, host, user, pass
-var btc_testnet = new Coin('bitcoin', 'testnet', 'localhost',
-  process.env.BITCOINRPC_USER, process.env.BITCOINRPC_PASS)
-
-var ltc_testnet = new Coin('litecoin', 'testnet', 'localhost',
-  process.env.LITECOINRPC_USER, process.env.LITECOINRPC_PASS)
-
-
-var displayBlockCount = function (err, count) {
-  if (err)
-    throw err
-  else {
-    console.log("Count = " + count + " blocks.")
-  }
-}
-
-btc_testnet.getblockcount(displayBlockCount)
-ltc_testnet.getblockcount(displayBlockCount)
