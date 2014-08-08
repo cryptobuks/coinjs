@@ -18,9 +18,10 @@ var handleError = function (err) {
 
 btc_test_rpc.getrawtransaction(txid, function (err, rawtx) {
   handleError(err)
-  btc_test_rpc.decoderawtransaction(rawtx, function (err, txObj) {
-    handleError(err)
-    console.log(util.inspect(txObj, false, null))
-  })
+  console.log(rawtx)
+  // btc_test_rpc.decoderawtransaction(rawtx, function (err, txObj) {
+  //   handleError(err)
+  //   console.log(util.inspect(txObj, false, null))
+  // })
 })
 
