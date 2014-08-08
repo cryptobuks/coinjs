@@ -1,4 +1,4 @@
-var coin = require('./coin2')
+var coin = require('./coin')
 var util = require('util')
 
 var btc_test_rpc = new coin.JSONRPC({

@@ -1,4 +1,4 @@
-var coin = require('./coin2')
+var coin = require('./coin')
 
 var ltc_testnet_opts = {
   port: 19332,

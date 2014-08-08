@@ -1,93 +1,184 @@
 var http = require('http')
+var merge = require('merge')
 
-// ok, this is the point where i really need to learn more javascript. I need
-// to learn how to make a class, how to define a constructor, etc.
-//
-// module.exports.projects = { 'bitcoin', 'darkcoin' }
-var opts = {
-  // these should be abstracted out into the implementation
-  hostname: 'localhost',
-  port: 18332, // for Bitcoin, 8332 = mainnet, 18332 = testnet
-
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
+var Projects = {
+  bitcoin: {
+    mainnet: {
+      port: 8332,
+    },
+    testnet: {
+      port: 18332,
+    },
   },
-
-  // this should be abstracted out into the implementation too
-  auth: process.env.BITCOINRPC_USER + ':' + process.env.BITCOINRPC_PASS
+  litecoin: {
+    mainnet: {
+      port: 9332,
+    },
+    testnet: {
+      port: 19332,
+    },
+  },
+  darkcoin: {
+    mainnet: {
+      port: 9998,
+    },
+    testnet: {
+      port: 19998,
+    },
+  },
 }
+module.exports.Projects = Projects
 
-var process_request = function(method, params, callback) {
-  var params = JSON.stringify({
-    'jsonrpc': '2.0',
-    'method': method,
-    'params': params
-  })
-  opts.headers['Content-Length'] = params.length
+module.exports.JSONRPC = function Coin (options) {
+  var defaults = {
+    hostname: 'localhost',
+    port: Projects['bitcoin']['mainnet'].port,
+  }
+  options = options || defaults
 
-  var data = [];
-  var req = http.request(opts, function (resp) {
-    resp.on('data', function (chunk) {
-      data.push(chunk)
-    }).on('err', function(err) {
-      callback(err)
-    }).on('end', function() {
-      obj = JSON.parse(data)
-      if (null !== obj.error) {
-        var e = new Error(obj.error.message)
-        e.code = obj.error.code
-        callback(e)
-      }
-      else
-        callback(null, obj.result)
+  // merge in defaults with options, options will take precedence
+  options = merge(true, defaults, options)
+
+  // new_options
+  this.hostname = options.hostname
+  this.username = options.username
+  this.password = options.password
+  this.port = options.port
+
+  var opts = {
+    hostname: this.hostname,
+    port: this.port,
+
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Length': params.length,
+    },
+
+    auth: this.username + ':' + this.password,
+  }
+
+
+  var process_request = function(method, params, callback) {
+    var params = JSON.stringify({
+      'jsonrpc': '2.0',
+      'method': method,
+      'params': params
     })
-  }).on('error', function (err) {
-    if (err)
-      callback(err)
-  })
+    opts.headers['Content-Length'] = params.length
 
-  req.write(params)
-  req.end()
-}
+    var data = [];
+    var req = http.request(opts, function (resp) {
+      resp.on('data', function (chunk) {
+        data.push(chunk)
+      }).on('err', function(err) {
+        callback(err)
+      }).on('end', function() {
+        obj = JSON.parse(data)
+        if (null !== obj.error) {
+          var e = new Error(obj.error.message)
+          e.code = obj.error.code
+          callback(e)
+        }
+        else
+          callback(null, obj.result)
+      })
+    }).on('error', function (err) {
+      if (err)
+        callback(err)
+    })
 
+    req.write(params)
+    req.end()
+  }
 
-module.exports.getblockhash = function (id, callback) {
-  return process_request('getblockhash', [ id ], callback)
-}
+  this.getblockhash = function (id, callback) {
+    return process_request('getblockhash', [ id ], callback)
+  }
 
-module.exports.getblock = function (hash, callback) {
-  return process_request('getblock', [ hash ], callback)
-}
+  this.getblock = function (hash, callback) {
+    return process_request('getblock', [ hash ], callback)
+  }
 
-module.exports.getblockcount = function (callback) {
-  return process_request('getblockcount', [], callback)
-}
+  this.getblockcount = function (callback) {
+    return process_request('getblockcount', [], callback)
+  }
 
-module.exports.getfakeblockcount = function (callback) {
-  return function () { callback(null, 10) }()
-}
+  this.getrawtransaction = function () {
+    var args     = Array.prototype.slice.call(arguments)
+    var callback = args.pop()
+    var txid     = args.shift()
+    var verbose  = args.shift()
 
-module.exports.getrawtransaction = function () {
-  args     = Array.prototype.slice.call(arguments)
-  callback = args.pop()
-  txid     = args.shift()
-  verbose  = args.shift()
+    verbose = verbose || 0
 
-  if (undefined === verbose)
-    verbose = 0
+    return process_request('getrawtransaction', [ txid , verbose ], callback)
+  }
 
-  return process_request('getrawtransaction', [ txid , verbose ], callback)
-}
+  this.decoderawtransaction = function (rawtx, callback) {
+    return process_request('decoderawtransaction', [ rawtx ], callback)
+  }
 
-module.exports.decoderawtransaction = function (rawtx, callback) {
-  return process_request('decoderawtransaction', [ rawtx ], callback)
-}
+  this.getrawmempool = function (callback) {
+    return process_request('getrawmempool', [], callback)
+  }
 
-module.exports.getrawmempool = function (callback) {
-  return process_request('getrawmempool', [], callback)
-}
+  this.getpeerinfo = function (callback) {
+    return process_request('getpeerinfo', [], callback)
+  }
 
-module.exports.getpeerinfo = function (callback) {
-  return process_request('getpeerinfo', [], callback)
+  this.signrawtransaction = function () {
+    var args     = Array.prototype.slice.call(arguments)
+
+    var callback = args.pop()
+    var rawtx    = args.shift()
+    var tx_inputs    = args.shift()
+    var private_keys = args.shift()
+
+    // defaults
+    tx_inputs = tx_inputs || []
+    private_keys = private_keys || []
+
+    return process_request('signrawtransaction', [ rawtx , tx_inputs, private_keys ], callback)
+  }
+
+  this.gettxout = function () {
+    var args     = Array.prototype.slice.call(arguments)
+
+    var callback = args.pop()
+    var txid     = args.shift()
+    var n        = args.shift()
+    var includemempool = args.shift()
+
+    // default
+    includemempool = includemempool || true
+
+    return process_request('gettxout', [txid, n, includemempool], callback)
+  }
+
+  this.importprivkey = function () {
+    var args     = Array.prototype.slice.call(arguments)
+
+    // <bitcoinprivkey> [label] [rescan=true]
+    var callback = args.pop()
+    var privkey  = args.shift()
+    var label    = args.shift()
+    var rescan   = args.shift()
+
+    label  = label || ''
+    if (undefined === rescan) {
+      rescan = rescan || true
+    }
+
+    return process_request('importprivkey', [privkey, label, rescan], callback)
+  }
+
+  this.sendrawtransaction = function (rawtx, callback) {
+    return process_request('sendrawtransaction', [rawtx], callback)
+  }
+
+  this.stop = function (callback) {
+    return process_request('stop', [], callback)
+  }
+
 }
