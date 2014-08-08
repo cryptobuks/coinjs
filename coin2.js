@@ -105,10 +105,10 @@ module.exports.JSONRPC = function Coin (options) {
   }
 
   this.getrawtransaction = function () {
-    args     = Array.prototype.slice.call(arguments)
-    callback = args.pop()
-    txid     = args.shift()
-    verbose  = args.shift()
+    var args     = Array.prototype.slice.call(arguments)
+    var callback = args.pop()
+    var txid     = args.shift()
+    var verbose  = args.shift()
 
     verbose = verbose || 0
 
@@ -125,6 +125,60 @@ module.exports.JSONRPC = function Coin (options) {
 
   this.getpeerinfo = function (callback) {
     return process_request('getpeerinfo', [], callback)
+  }
+
+  this.signrawtransaction = function () {
+    var args     = Array.prototype.slice.call(arguments)
+
+    var callback = args.pop()
+    var rawtx    = args.shift()
+    var tx_inputs    = args.shift()
+    var private_keys = args.shift()
+
+    // defaults
+    tx_inputs = tx_inputs || []
+    private_keys = private_keys || []
+
+    return process_request('signrawtransaction', [ rawtx , tx_inputs, private_keys ], callback)
+  }
+
+  this.gettxout = function () {
+    var args     = Array.prototype.slice.call(arguments)
+
+    var callback = args.pop()
+    var txid     = args.shift()
+    var n        = args.shift()
+    var includemempool = args.shift()
+
+    // default
+    includemempool = includemempool || true
+
+    return process_request('gettxout', [txid, n, includemempool], callback)
+  }
+
+  this.importprivkey = function () {
+    var args     = Array.prototype.slice.call(arguments)
+
+    // <bitcoinprivkey> [label] [rescan=true]
+    var callback = args.pop()
+    var privkey  = args.shift()
+    var label    = args.shift()
+    var rescan   = args.shift()
+
+    label  = label || ''
+    if (undefined === rescan) {
+      rescan = rescan || true
+    }
+
+    return process_request('importprivkey', [privkey, label, rescan], callback)
+  }
+
+  this.sendrawtransaction = function (rawtx, callback) {
+    return process_request('sendrawtransaction', [rawtx], callback)
+  }
+
+  this.stop = function (callback) {
+    return process_request('stop', [], callback)
   }
 
 }
