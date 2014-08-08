@@ -14,10 +14,10 @@ var handleError = function (err) {
   }
 }
 
-var txid = '0ae0096056aaf80bb5b22c2624d7c278bbde9dfaf15fe3761b48d6b2edb41950'
+var rawtx = process.argv[2]
 
-btc_test_rpc.getrawtransaction(txid, function (err, rawtx) {
+btc_test_rpc.sendrawtransaction(rawtx, function (err, data) {
   handleError(err)
-  console.log(rawtx)
+  console.log(data)
 })
 

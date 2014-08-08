@@ -15,9 +15,10 @@ var handleError = function (err) {
 }
 
 var txid = '0ae0096056aaf80bb5b22c2624d7c278bbde9dfaf15fe3761b48d6b2edb41950'
+var n    = 0
 
-btc_test_rpc.getrawtransaction(txid, function (err, rawtx) {
+btc_test_rpc.gettxout(txid, n, function (err, info) {
   handleError(err)
-  console.log(rawtx)
+  console.log(info)
 })
 

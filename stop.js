@@ -1,5 +1,4 @@
 var coin = require('./coin2')
-var util = require('util')
 
 var btc_test_rpc = new coin.JSONRPC({
   port: coin.Projects['bitcoin']['testnet'].port,
@@ -14,10 +13,8 @@ var handleError = function (err) {
   }
 }
 
-var txid = '0ae0096056aaf80bb5b22c2624d7c278bbde9dfaf15fe3761b48d6b2edb41950'
-
-btc_test_rpc.getrawtransaction(txid, function (err, rawtx) {
+btc_test_rpc.stop(function (err) {
   handleError(err)
-  console.log(rawtx)
+  console.log("sent stop signal!")
 })
 
