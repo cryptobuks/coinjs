@@ -110,8 +110,7 @@ module.exports.JSONRPC = function Coin (options) {
     txid     = args.shift()
     verbose  = args.shift()
 
-    if (undefined === verbose)
-      verbose = 0
+    verbose = verbose || 0
 
     return process_request('getrawtransaction', [ txid , verbose ], callback)
   }
