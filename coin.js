@@ -177,6 +177,26 @@ module.exports.JSONRPC = function Coin (options) {
     return process_request('sendrawtransaction', [rawtx], callback)
   }
 
+  this.gettxoutsetinfo = function (callback) {
+    return process_request('gettxoutsetinfo', [], callback)
+  }
+
+  this.getinfo = function (callback) {
+    return process_request('getinfo', [], callback)
+  }
+
+  this.getbestblockhash = function (callback) {
+    return process_request('getbestblockhash', [], callback)
+  }
+
+  this.getconnectioncount = function (callback) {
+    return process_request('getconnectioncount', [], callback)
+  }
+
+  this.getdifficulty = function (callback) {
+    return process_request('getdifficulty', [], callback)
+  }
+
   this.stop = function (callback) {
     return process_request('stop', [], callback)
   }
