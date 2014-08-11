@@ -1,10 +1,4 @@
-var coin = require('./coin')
-
-var btc_test_rpc = new coin.JSONRPC({
-  port: coin.Projects['bitcoin']['testnet'].port,
-  username: process.env.BITCOINRPC_USER,
-  password: process.env.BITCOINRPC_PASS
-})
+var jsonrpc = require('./current')
 
 var handleError = function (err) {
   if (err) {
@@ -13,7 +7,7 @@ var handleError = function (err) {
   }
 }
 
-btc_test_rpc.stop(function (err) {
+jsonrpc.stop(function (err) {
   handleError(err)
   console.log("sent stop signal!")
 })

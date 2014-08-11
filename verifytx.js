@@ -1,11 +1,4 @@
-var coin = require('./coin')
-
-var btc_testnet_opts = {
-  port: coin.Projects.bitcoin.testnet.port,
-  username: process.env.BITCOINRPC_USER,
-  password: process.env.BITCOINRPC_PASS,
-}
-var btc_test_rpc = new coin.JSONRPC(btc_testnet_opts)
+var jsonrpc = require('./current')
 
 var handleError = function (err) {
   if (err) {
@@ -16,7 +9,7 @@ var handleError = function (err) {
 
 var rawtx = process.argv[2]
 
-btc_test_rpc.signrawtransaction(rawtx, function (err, signed) {
+jsonrpc.signrawtransaction(rawtx, function (err, signed) {
   // handleError(err)
   console.log(signed)
 })
