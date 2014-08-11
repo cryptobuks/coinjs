@@ -24,17 +24,3 @@ var displayBlockCount = function (err, count) {
 
 btc_testnet.getblockcount(displayBlockCount)
 ltc_testnet.getblockcount(displayBlockCount)
-
-ltc_testnet.getrawmempool(function (err, data) {
-  console.log(data)
-  data.forEach(function(txid) {
-    ltc_testnet.getrawtransaction(txid, 1, function(err, txObj) {
-      console.log(util.inspect(txObj, false, null))
-    })
-  })
-})
-
-ltc_testnet.getpeerinfo(function (err, data) {
-  console.log("data = ...")
-  console.log(data)
-})
