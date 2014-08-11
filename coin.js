@@ -1,3 +1,5 @@
+(function () {
+
 var http = require('http')
 var merge = require('merge')
 
@@ -206,3 +208,5 @@ module.exports.JSONRPC = function Coin (options) {
   }
 
 }
+
+})()
