@@ -201,4 +201,8 @@ module.exports.JSONRPC = function Coin (options) {
     return process_request('stop', [], callback)
   }
 
+  this.dumpprivkey = function (addr, callback) {
+    return process_request('dumpprivkey', [addr], callback)
+  }
+
 }
