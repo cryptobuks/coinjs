@@ -8,7 +8,9 @@ var btc_testnet_opts = {
 }
 var btc_test_rpc = new coin.JSONRPC(btc_testnet_opts)
 
-btc_test_rpc.getblockhash(0, function (err, hash) {
+var blockno = +process.argv[2] || 0
+
+btc_test_rpc.getblockhash(blockno, function (err, hash) {
   if (err) {
     console.error(err)
     throw(err)
