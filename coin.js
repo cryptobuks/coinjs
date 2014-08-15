@@ -76,7 +76,7 @@ module.exports.JSONRPC = function Coin (options) {
       }).on('err', function(err) {
         callback(err)
       }).on('end', function() {
-        obj = JSON.parse(data)
+        var obj = JSON.parse(data)
         if (null !== obj.error) {
           var e = new Error(obj.error.message)
           e.code = obj.error.code
