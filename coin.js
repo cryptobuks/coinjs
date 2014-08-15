@@ -76,7 +76,19 @@ module.exports.JSONRPC = function Coin (options) {
       }).on('err', function(err) {
         callback(err)
       }).on('end', function() {
-        var obj = JSON.parse(data)
+
+        // Don't like using try-catch here, but JSON.parse needs to be handled
+        //
+        // 1. read article here:
+        //     https://www.joyent.com/blog/best-practices-for-error-handling-in-node-js
+        // 2. then update code below accordingly
+        //
+        var obj = null
+        try {
+          obj = JSON.parse(data)
+        } catch (e) {
+          callback(e)
+        }
         if (null !== obj.error) {
           var e = new Error(obj.error.message)
           e.code = obj.error.code
