@@ -17,4 +17,5 @@
 * organize history for github
 * release to github
 * announce on reddit - /r/bitcoin
+* see also: https://github.com/Coinnext/node-coind/
 
