@@ -1,5 +1,5 @@
 (function () {
-  var coin = require('./coin')
+  var coin = require('../lib/coin')
 
   var ltc_testnet_opts = {
     port: coin.Projects.litecoin.testnet.port,
