@@ -1,5 +1,5 @@
 {
-  "name": "testnet-project",
+  "name": "coinjs",
   "description": "Bitcoin JSON-RPC utilities, works for altcoins",
   "version": "0.0.1",
   "private": true,
