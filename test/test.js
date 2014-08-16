@@ -1,5 +1,5 @@
 var coin = require('../coin.js')
-var assert = require('assert')
+var assert = require('chai').assert
 
 describe('Coin', function () {
   describe('Projects', function () {
