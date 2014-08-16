@@ -8,12 +8,12 @@ describe('Coin', function () {
 
       assert.ok(coin.Projects.bitcoin.mainnet)
       assert.ok(coin.Projects.bitcoin.mainnet.port)
-      assert.equal(typeof coin.Projects.bitcoin.mainnet.port, 'number')
+      assert.isNumber(coin.Projects.bitcoin.mainnet.port)
       assert.equal(coin.Projects.bitcoin.mainnet.port, 8332)
 
       assert.ok(coin.Projects.bitcoin.testnet)
       assert.ok(coin.Projects.bitcoin.testnet.port)
-      assert.equal(typeof coin.Projects.bitcoin.testnet.port, 'number')
+      assert.isNumber(coin.Projects.bitcoin.testnet.port)
       assert.equal(coin.Projects.bitcoin.testnet.port, 18332)
     })
 
@@ -22,12 +22,12 @@ describe('Coin', function () {
 
       assert.ok(coin.Projects.litecoin.mainnet)
       assert.ok(coin.Projects.litecoin.mainnet.port)
-      assert.equal(typeof coin.Projects.litecoin.mainnet.port, 'number')
+      assert.isNumber(coin.Projects.litecoin.mainnet.port)
       assert.equal(coin.Projects.litecoin.mainnet.port, 9332)
 
       assert.ok(coin.Projects.litecoin.testnet)
       assert.ok(coin.Projects.litecoin.testnet.port)
-      assert.equal(typeof coin.Projects.litecoin.testnet.port, 'number')
+      assert.isNumber(coin.Projects.litecoin.testnet.port)
       assert.equal(coin.Projects.litecoin.testnet.port, 19332)
     })
 
