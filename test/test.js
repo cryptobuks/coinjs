@@ -1,4 +1,4 @@
-var coin = require('../coin.js')
+var coin = require('../lib/coin.js')
 var assert = require('chai').assert
 
 describe('Coin', function () {
