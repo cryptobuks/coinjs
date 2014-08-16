@@ -7,6 +7,7 @@
 
 ## Code/structure
 
+* break out Coin.Projects into separate file, see bitcore for example
 * move example programs into examples/ dir
 * write tests (using mocha/chai)
 * organize this like a real node.js project
