@@ -3,13 +3,10 @@
 ## Documentation
 
 * re-write README for coin.js
-* rename project in package.json
 
 ## Code/structure
 
-* break out Coin.Projects into separate file, see bitcore for example
-* move example programs into examples/ dir
-* write tests (using mocha/chai)
+* write more tests (using mocha/chai)
 * organize this like a real node.js project
 
 ## Finalize/prep for release
