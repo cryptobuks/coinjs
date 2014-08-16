@@ -3,7 +3,7 @@
   "description": "Bitcoin JSON-RPC over http connection lib, works for altcoins",
   "version": "0.0.1",
   "private": true,
-  "dependencies": {
+  "devDependencies": {
     "chai": "^1.9.1",
     "merge": "1.1.3"
   }
