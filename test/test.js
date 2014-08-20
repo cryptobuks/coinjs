@@ -1,115 +1,115 @@
 var coin = require('../lib/coin.js')
-var assert = require('chai').assert
+var expect = require('chai').expect
 
 describe('Coin', function () {
   describe('Projects', function () {
     it('should have a Bitcoin project', function () {
-      assert.ok(coin.Projects.bitcoin)
+      expect(coin.Projects.bitcoin).exist
 
-      assert.ok(coin.Projects.bitcoin.mainnet)
-      assert.ok(coin.Projects.bitcoin.mainnet.port)
-      assert.isNumber(coin.Projects.bitcoin.mainnet.port)
-      assert.equal(coin.Projects.bitcoin.mainnet.port, 8332)
+      expect(coin.Projects.bitcoin.mainnet).exist
+      expect(coin.Projects.bitcoin.mainnet.port).exist
+      expect(coin.Projects.bitcoin.mainnet.port).match(/\d+/)
+      expect(coin.Projects.bitcoin.mainnet.port).equal(8332)
 
-      assert.ok(coin.Projects.bitcoin.testnet)
-      assert.ok(coin.Projects.bitcoin.testnet.port)
-      assert.isNumber(coin.Projects.bitcoin.testnet.port)
-      assert.equal(coin.Projects.bitcoin.testnet.port, 18332)
+      expect(coin.Projects.bitcoin.testnet).exist
+      expect(coin.Projects.bitcoin.testnet.port).exist
+      expect(coin.Projects.bitcoin.testnet.port).match(/\d+/)
+      expect(coin.Projects.bitcoin.testnet.port).equal(18332)
     })
 
     it('should have a Litecoin project', function () {
-      assert.ok(coin.Projects.litecoin)
+      expect(coin.Projects.litecoin).exist
 
-      assert.ok(coin.Projects.litecoin.mainnet)
-      assert.ok(coin.Projects.litecoin.mainnet.port)
-      assert.isNumber(coin.Projects.litecoin.mainnet.port)
-      assert.equal(coin.Projects.litecoin.mainnet.port, 9332)
+      expect(coin.Projects.litecoin.mainnet).exist
+      expect(coin.Projects.litecoin.mainnet.port).exist
+      expect(coin.Projects.litecoin.mainnet.port).match(/\d+/)
+      expect(coin.Projects.litecoin.mainnet.port).equal(9332)
 
-      assert.ok(coin.Projects.litecoin.testnet)
-      assert.ok(coin.Projects.litecoin.testnet.port)
-      assert.isNumber(coin.Projects.litecoin.testnet.port)
-      assert.equal(coin.Projects.litecoin.testnet.port, 19332)
+      expect(coin.Projects.litecoin.testnet).exist
+      expect(coin.Projects.litecoin.testnet.port).exist
+      expect(coin.Projects.litecoin.testnet.port).match(/\d+/)
+      expect(coin.Projects.litecoin.testnet.port).equal(19332)
     })
 
   })
 
   describe('JSONRPC', function () {
     it('should have a JSONRPC() function', function () {
-      assert.ok(typeof coin.JSONRPC, 'function')
+      expect(coin.JSONRPC).instanceof(Function)
     })
 
     var jsonrpc = new coin.JSONRPC()
 
     it('should have getblockcount method', function () {
-      assert.equal(typeof jsonrpc.getblockcount, 'function')
+      expect(jsonrpc.getblockcount).instanceof(Function)
     })
 
     it('should have getblockhash method', function () {
-      assert.equal(typeof jsonrpc.getblockhash, 'function')
+      expect(jsonrpc.getblockhash).instanceof(Function)
     })
 
     it('should have getblock method', function () {
-      assert.equal(typeof jsonrpc.getblock, 'function')
+      expect(jsonrpc.getblock).instanceof(Function)
     })
 
     it('should have getrawtransaction method', function () {
-      assert.equal(typeof jsonrpc.getrawtransaction, 'function')
+      expect(jsonrpc.getrawtransaction).instanceof(Function)
     })
 
     it('should have decoderawtransaction method', function () {
-      assert.equal(typeof jsonrpc.decoderawtransaction, 'function')
+      expect(jsonrpc.decoderawtransaction).instanceof(Function)
     })
 
     it('should have getrawmempool method', function () {
-      assert.equal(typeof jsonrpc.getrawmempool, 'function')
+      expect(jsonrpc.getrawmempool).instanceof(Function)
     })
 
     it('should have getpeerinfo method', function () {
-      assert.equal(typeof jsonrpc.getpeerinfo, 'function')
+      expect(jsonrpc.getpeerinfo).instanceof(Function)
     })
 
     it('should have signrawtransaction method', function () {
-      assert.equal(typeof jsonrpc.signrawtransaction, 'function')
+      expect(jsonrpc.signrawtransaction).instanceof(Function)
     })
 
     it('should have gettxout method', function () {
-      assert.equal(typeof jsonrpc.gettxout, 'function')
+      expect(jsonrpc.gettxout).instanceof(Function)
     })
 
     it('should have importprivkey method', function () {
-      assert.equal(typeof jsonrpc.importprivkey, 'function')
+      expect(jsonrpc.importprivkey).instanceof(Function)
     })
 
     it('should have sendrawtransaction method', function () {
-      assert.equal(typeof jsonrpc.sendrawtransaction, 'function')
+      expect(jsonrpc.sendrawtransaction).instanceof(Function)
     })
 
     it('should have gettxoutsetinfo method', function () {
-      assert.equal(typeof jsonrpc.gettxoutsetinfo, 'function')
+      expect(jsonrpc.gettxoutsetinfo).instanceof(Function)
     })
 
     it('should have getinfo method', function () {
-      assert.equal(typeof jsonrpc.getinfo, 'function')
+      expect(jsonrpc.getinfo).instanceof(Function)
     })
 
     it('should have getbestblockhash method', function () {
-      assert.equal(typeof jsonrpc.getbestblockhash, 'function')
+      expect(jsonrpc.getbestblockhash).instanceof(Function)
     })
 
     it('should have getconnectioncount method', function () {
-      assert.equal(typeof jsonrpc.getconnectioncount, 'function')
+      expect(jsonrpc.getconnectioncount).instanceof(Function)
     })
 
     it('should have getdifficulty method', function () {
-      assert.equal(typeof jsonrpc.getdifficulty, 'function')
+      expect(jsonrpc.getdifficulty).instanceof(Function)
     })
 
     it('should have stop method', function () {
-      assert.equal(typeof jsonrpc.stop, 'function')
+      expect(jsonrpc.stop).instanceof(Function)
     })
 
     it('should have dumpprivkey method', function () {
-      assert.equal(typeof jsonrpc.dumpprivkey, 'function')
+      expect(jsonrpc.dumpprivkey).instanceof(Function)
     })
 
   })
