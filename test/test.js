@@ -1,5 +1,6 @@
 var coin = require('../lib/coin.js')
 var expect = require('chai').expect
+var nock = require('nock')
 
 describe('Coin', function () {
   describe('Projects', function () {
@@ -38,7 +39,11 @@ describe('Coin', function () {
       expect(coin.JSONRPC).instanceof(Function)
     })
 
-    var jsonrpc = new coin.JSONRPC()
+    var jsonrpc = new coin.JSONRPC({
+      username: process.env.BITCOINRPC_USER,
+      password: process.env.BITCOINRPC_PASS,
+      port: coin.Projects.bitcoin.testnet.port
+    })
 
     it('should have getblockcount method', function () {
       expect(jsonrpc.getblockcount).instanceof(Function)
@@ -111,6 +116,52 @@ describe('Coin', function () {
     it('should have dumpprivkey method', function () {
       expect(jsonrpc.dumpprivkey).instanceof(Function)
     })
+
+
+    // async
+
+    it('#getblockcount() should return current block count', function (done) {
+
+      nock(jsonrpc.hostname + ':' + jsonrpc.port)
+        .post('/', {"jsonrpc":"2.0","method":"getblockcount","params":[]})
+        .reply(200, {"result":276221,"error":null,"id":null}, { date: 'Wed, 20 Aug 2014 03:50:35 +0000',
+        connection: 'keep-alive',
+        'content-length': '41',
+        'content-type': 'application/json',
+        server: 'bitcoin-json-rpc/v0.9.2.1-g354c0f3-beta' });
+
+      jsonrpc.getblockcount(function (err, count) {
+        if (err)
+          done(err)
+        else {
+          expect(typeof count).equal('number')
+          done()
+        }
+      })
+    })
+
+
+    it('#getblockhash() should return block hash', function (done) {
+      // nock.recorder.rec();
+
+      nock(jsonrpc.hostname + ':' + jsonrpc.port)
+        .post('/', {"jsonrpc":"2.0","method":"getblockhash","params":[0]})
+        .reply(200, {"result":"000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943","error":null,"id":null}, { date: 'Tue, 19 Aug 2014 19:56:56 +0000',
+        connection: 'keep-alive',
+        'content-length': '101',
+        'content-type': 'application/json',
+        server: 'bitcoin-json-rpc/v0.9.2.1-g354c0f3-beta' });
+
+      jsonrpc.getblockhash(0, function (err, hash) {
+        if (err)
+          done(err)
+        else {
+          expect(hash).equal('000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943')
+          done()
+        }
+      })
+    })
+
 
   })
 
