@@ -122,7 +122,7 @@ describe('Coin', function () {
 
     it('#getblockcount() should return current block count', function (done) {
 
-      nock(jsonrpc.hostname + ':' + jsonrpc.port)
+      nock('http://' + jsonrpc.hostname + ':' + jsonrpc.port)
         .post('/', {"jsonrpc":"2.0","method":"getblockcount","params":[]})
         .reply(200, {"result":276221,"error":null,"id":null}, { date: 'Wed, 20 Aug 2014 03:50:35 +0000',
         connection: 'keep-alive',
@@ -135,6 +135,7 @@ describe('Coin', function () {
           done(err)
         else {
           expect(typeof count).equal('number')
+          expect(count).equal(276221)
           done()
         }
       })
@@ -144,7 +145,7 @@ describe('Coin', function () {
     it('#getblockhash() should return block hash', function (done) {
       // nock.recorder.rec();
 
-      nock(jsonrpc.hostname + ':' + jsonrpc.port)
+      nock('http://' + jsonrpc.hostname + ':' + jsonrpc.port)
         .post('/', {"jsonrpc":"2.0","method":"getblockhash","params":[0]})
         .reply(200, {"result":"000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943","error":null,"id":null}, { date: 'Tue, 19 Aug 2014 19:56:56 +0000',
         connection: 'keep-alive',
