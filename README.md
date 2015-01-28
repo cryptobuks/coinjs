@@ -20,6 +20,10 @@ Test with mocha:
 
 * Support HTTP over SSL (HTTPS) connections.
 
+## Alternatives
+
+* https://github.com/Coinnext/node-coind/
+
 #License
 
 **Code released under the MIT license.**
