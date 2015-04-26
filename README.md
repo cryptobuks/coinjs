@@ -1,6 +1,6 @@
 # Coinjs
 
-A *coin library for accessing the standard JSONRPC interface for crypto-coins. Connects via HTTP(S).
+A \*coin library for accessing the standard JSONRPC interface for crypto-coins. Connects via HTTP(S).
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ Test with mocha:
 
 ## Alternatives
 
-* https://github.com/Coinnext/node-coind/
+* https://github.com/deadpoets/node-coind
 
 #License
 
