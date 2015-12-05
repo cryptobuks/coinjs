@@ -24,6 +24,6 @@ Test with mocha:
 
 * https://github.com/deadpoets/node-coind
 
-#License
+## License
 
 **Code released under the MIT license.**
