@@ -1,6 +1,6 @@
 # Coinjs
 
-A \*coin library for accessing the standard JSONRPC interface for crypto-coins. Connects via HTTP(S).
+A Node.js JSONRPC wrapper for crypto-currencies. Connects via HTTP(S).
 
 ## Getting Started
 
