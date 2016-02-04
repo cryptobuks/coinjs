@@ -14,7 +14,9 @@ to install the dependencies
 
 Test with mocha:
 
-```mocha```
+```
+mocha
+```
 
 ## Todo
 
