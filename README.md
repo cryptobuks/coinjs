@@ -2,6 +2,8 @@
 
 A Node.js JSONRPC wrapper for crypto-currencies. Connects via HTTP(S).
 
+**Don't use this. It's incomplete and not ready for production use. Use <https://github.com/deadpoets/node-coind> instead. YOU HAVE BEEN WARNED.**
+
 ## Getting Started
 
 Download the code, then run
@@ -24,7 +26,7 @@ mocha
 
 ## Alternatives
 
-* https://github.com/deadpoets/node-coind
+* <https://github.com/deadpoets/node-coind>
 
 ## License
 
